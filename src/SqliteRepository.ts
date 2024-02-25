@@ -1,7 +1,6 @@
 
 import { Database } from "sqlite3";
 
-
 export abstract class SqliteRepository {
     protected readonly preparedDb: Promise<Database>;
     public constructor(db: Database) {

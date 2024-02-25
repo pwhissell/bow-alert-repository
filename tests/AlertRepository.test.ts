@@ -1,4 +1,4 @@
-import { Alert, AlertRepository } from '@/index'
+import { Alert, AlertRepository } from '../index.js'
 import { Database } from 'sqlite3';
 import { describe, test, beforeEach, expect } from "@jest/globals";
 

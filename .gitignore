@@ -87,8 +87,7 @@ web_modules/
 .next
 out
 
-# Nuxt.js build / generate output
-.nuxt
+# tsc output
 dist
 
 # Gatsby files
@@ -128,3 +127,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+

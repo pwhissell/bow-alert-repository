@@ -1,6 +1,6 @@
 
 import { Database } from "sqlite3";
-import { Alert, AlertConfig } from "@/src/Alert";
+import { Alert, AlertConfig } from "./Alert";
 import { SqliteRepository } from "./SqliteRepository";
 
 interface AlertRow {
@@ -24,10 +24,6 @@ function Map(alertRow: AlertRow, i?: number, alerts?: AlertRow[]): Alert{
         max: alertRow.MAX_THRESHOLD,
     }
 }
-
-export type ErrorConsumer = (err: Error) => void;
-export type AlertConsumer = (Alerts: Alert) => void;
-export type AlertsConsumer = (Alerts: Alert[]) => void;
 
 export class AlertRepository extends SqliteRepository {
     

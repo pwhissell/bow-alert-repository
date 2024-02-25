@@ -1,2 +1,2 @@
-export { Alert } from "@/src/Alert"
-export { AlertRepository } from "@/src/AlertRepository"
+export { Alert } from "./src/Alert.js"
+export { AlertRepository } from "./src/AlertRepository.js"
