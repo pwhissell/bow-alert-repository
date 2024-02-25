@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "declaration": true,
+        "baseUrl": ".",
+        "paths": {
+        "@/*": [
+          "./*"
+        ]
+      },
+      "module": "NodeNext",
+      "moduleResolution": "NodeNext"
+    }
+}
