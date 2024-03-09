@@ -25,4 +25,21 @@ describe('Database operations', () => {
         expect(alerts).toEqual([givenAlert])
     });
 
+    test('Updating an alert should update row in place', async () => {
+        const givenInitialAlert: Alert = {
+           topic: 'givenTopic',
+           max: 10,
+           min: 1
+        };
+        const givenUpdatedAlert: Alert = {
+            topic: 'givenTopic',
+            max: 20,
+            min: 2
+         };
+        await alertRepository.CreateAlert(givenInitialAlert);
+        await alertRepository.UpdateAlert(givenUpdatedAlert);
+        const alerts = await alertRepository.GetAlerts();
+        expect(alerts).toEqual([givenUpdatedAlert])
+    });
+
 });

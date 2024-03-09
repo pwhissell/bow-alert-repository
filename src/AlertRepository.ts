@@ -17,7 +17,7 @@ const CREATE_TABLE_QUERY = `
     )
 `;
 
-function Map(alertRow: AlertRow, i?: number, alerts?: AlertRow[]): Alert{
+function MapRowToAlert(alertRow: AlertRow, i?: number, alerts?: AlertRow[]): Alert{
     return {
         topic: alertRow.TOPIC,
         min: alertRow.MIN_THRESHOLD,
@@ -35,19 +35,27 @@ export class AlertRepository extends SqliteRepository {
         super(db);
     }
 
+    readonly GET_QUERY = `SELECT * FROM ${AlertConfig.TABLE_NAME}`;
     public async GetAlerts() {
-        const query = `SELECT * FROM ${AlertConfig.TABLE_NAME}`;
         const db = await this.preparedDb;
         return this.Promisify<AlertRow[]>((callback)=>{
-            db.all<AlertRow>(query, [], callback);
-        }).then(all=>all.map(Map))
+            db.all<AlertRow>(this.GET_QUERY, [], callback);
+        }).then(all=>all.map(MapRowToAlert))
     }
 
+    readonly INSERT_QUERY = `INSERT INTO ${AlertConfig.TABLE_NAME} (TOPIC, MIN_THRESHOLD, MAX_THRESHOLD) VALUES (?, ?, ?)`;
     public async CreateAlert(alert: Alert) {
-        const insert = `INSERT INTO ${AlertConfig.TABLE_NAME} (TOPIC, MIN_THRESHOLD, MAX_THRESHOLD) VALUES (?, ?, ?)`;
         const db = await this.preparedDb;
         return this.Promisify((callback)=>{
-            db.run(insert, [alert.topic, alert.min, alert.max], callback);
+            db.run(this.INSERT_QUERY, [alert.topic, alert.min, alert.max], callback);
+        });
+    }
+
+    readonly UPDATE_QUERY = `UPDATE ${AlertConfig.TABLE_NAME} SET MIN_THRESHOLD = ?, MAX_THRESHOLD = ? WHERE TOPIC = ?;`;
+    public async UpdateAlert(alert: Alert) {
+        const db = await this.preparedDb;
+        return this.Promisify((callback)=>{
+            db.run(this.UPDATE_QUERY, [alert.min, alert.max, alert.topic], callback);
         });
     }
 
